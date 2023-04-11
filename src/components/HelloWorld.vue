@@ -62,7 +62,7 @@ h2{
   padding: 50px;
   text-align: center;
   justify-content: center;
-  width: calc(100% - 300px);
+  width: 100%;
   display: column;
 }
 

@@ -44,6 +44,7 @@ export default {
 *{
   margin: 0;
   padding: 0;
+  width: 100%;
   box-sizing: border-box;
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
