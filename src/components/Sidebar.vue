@@ -34,13 +34,10 @@
                 </span>
                 <span class="text">About</span>
             </router-link>
-        </div>
-
-        <div class="flex"></div>
-
-        <div class="menu">
             <router-link to="/settings" class="button">
-                <span class="material-symbol-outlined">settings</span>
+                <span class="material-symbols-outlined">
+                settings
+                </span>
                 <span class="text">Settings</span>
             </router-link>
         </div>
@@ -62,8 +59,7 @@ const ToggleMenu = () => {
 aside {
     display: flex;
     flex-direction: column;
-    background-color: black;
-    color: white;
+    background-color: #CCD5AE;
     width: calc(2rem + 32px);
     overflow: hidden;
     min-height: 100vh;
@@ -71,7 +67,7 @@ aside {
     transition: 0.5s ease-out;
 
     .flex {
-        flex: 1 1 0%;
+        flex: 2 1 0%;
     }
 
     .logo {
@@ -91,17 +87,20 @@ aside {
 
         .menu-toggle {
             transition: 0.5s ease-out;
+            width: 70px;
 
             .material-symbol-outlined {
                 font-size: 2rem;
                 color: var(--light);
-                transition: 0.2s ease-out;
+                transition: 0.5s ease-out;
             }
 
             &:hover {
                 .material-symbol-outlined {
                     color: var(--primary);
                     transform: translateX(0.5rem);
+
+                    transition: 0.5s ease-out;
                 }
             }
         }
@@ -114,15 +113,15 @@ aside {
     }
 
     h3 {
-        color: var(--grey);
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
+        color: #023e8a;
+        font-size: 23px;
+        margin-bottom: 15px;
         text-transform: uppercase;
     }
 
     .menu {
         margin: 0 -1rem;
-
+        font-size: 20px;
         .button {
             display: flex;
             align-items: center;
@@ -131,13 +130,15 @@ aside {
             padding: 0.5rem 1rem;
 
             .material-symbol-outlined {
-                font-size: 2rem;
-                color: var(--light);
+                font-size: 5rem;
+                color: white;
                 transition: 0.5s ease-out;
             }
 
             .text {
-                color: var(--light);
+                color: #0096c7;
+                margin: 2px;
+                padding-left: 20px;
                 transition: 0.5s ease-out;
             }
 
@@ -146,17 +147,18 @@ aside {
 
                 .material-symbol-outlined,
                 .text {
-                    color: var(--primary);
+                    color: brown;
                 }
             }
 
             &.router-link-exact-active {
-                background-color: var(--dark-alt);
-                border-right: 5px solid var(--primary);
+                background-color: ivory;
+                border-right: 5px solid black;
+                margin-left:5px;
+                border-radius: 10%;
 
-                .material-symbol-outlined,
-                .text {
-                    color: var(--primary);
+                .material-symbol-outlined,.text {
+                    color: blueviolet;
                 }
             }
         }
@@ -173,10 +175,12 @@ aside {
     }
 
     &.is-expanded {
-        width: var(--sidebar-width);
+        width: 200px;
+        transition: 0.5 ease-out;
 
         .menu-toggle-wrap {
             top: -3rem;
+            transition: 0.5s ease-out;
 
             .menu-toggle {
                 transform: rotate(-180deg);
