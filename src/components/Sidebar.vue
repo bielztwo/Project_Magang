@@ -60,7 +60,7 @@ aside {
     display: flex;
     flex-direction: column;
     background-color: #CCD5AE;
-    width: calc(2rem + 32px);
+    width: calc(2rem + 40px);
     overflow: hidden;
     min-height: 100vh;
     padding: 1rem;
@@ -98,7 +98,7 @@ aside {
             &:hover {
                 .material-symbol-outlined {
                     color: var(--primary);
-                    transform: translateX(0.5rem);
+                    transform: translateX(1rem);
 
                     transition: 0.5s ease-out;
                 }
@@ -140,6 +140,7 @@ aside {
                 margin: 2px;
                 padding-left: 20px;
                 transition: 0.5s ease-out;
+                text-align: right;
             }
 
             &:hover {
@@ -153,8 +154,8 @@ aside {
 
             &.router-link-exact-active {
                 background-color: ivory;
-                border-right: 5px solid black;
-                margin-left:5px;
+                border-right: 8px solid black;
+                margin-left:10px;
                 border-radius: 10%;
 
                 .material-symbol-outlined,.text {
@@ -175,7 +176,7 @@ aside {
     }
 
     &.is-expanded {
-        width: 200px;
+        width: 230px;
         transition: 0.5 ease-out;
 
         .menu-toggle-wrap {

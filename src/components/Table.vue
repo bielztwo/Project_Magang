@@ -2,7 +2,7 @@
     <div class="hello">
             <h2 style="text-align: center;">Items</h2>
             <body>
-            <div>
+            <div class="buttonAll">
                 <button id = "buttn1" class="btn" v-on:click="getData1()">alldata</button>
                 <button id = "b2" class="btn" v-on:click="getData2()">2 Minutes</button>
                 <button id = "b3" class="btn" v-on:click="getData3()">10 Minutes</button>
@@ -118,6 +118,8 @@ export default {
 <style scoped>
 *{
     display: column;
+    width: 100%;
+    margin-top: 20px;
 }
 h4 {
     margin: 40px 0 0;
@@ -136,6 +138,11 @@ li {
 a {
     color: #42b983;
 }
+.buttonAll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .btn{
     background-color: #42b983;
     color: white;
@@ -150,9 +157,9 @@ a {
 }
 
 .items-table {
-    margin-top: 20px;
+    margin-top: 10px;
     border-collapse: collapse;
-    width: 60%;
+    width: 80%;
     margin-bottom: 1rem;
     margin: 0 auto;
 }
@@ -162,11 +169,11 @@ h2 {
 }
 
 .table-scroll {
-    margin-top: 50px;
+    margin-top: 30px;
     height: 700px;
     overflow: auto;
-    margin-left: 350px;
-    width: 1200px;
+    align-items: center;
+    width: 90%;
 }
 
 .items-table th,
