@@ -42,7 +42,7 @@ export default {
             item: '',
             item1: [],
             buttn1: false,
-            b2: false
+            b2: false,
         }
     },
     methods: {
