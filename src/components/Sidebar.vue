@@ -28,13 +28,19 @@
                 </span>
                 <span class="text">Table</span>
             </router-link>
+            <router-link to="/recording" class="button">
+                <span class="material-symbols-outlined">
+                task 
+                </span>
+                <span class="text">Record</span>
+            </router-link>
             <router-link to="/about" class="button">
                 <span class="material-symbols-outlined">
                 help
                 </span>
                 <span class="text">About</span>
             </router-link>
-            <router-link to="/settings" class="button">
+            <router-link to="/setting" class="button">
                 <span class="material-symbols-outlined">
                 settings
                 </span>
