@@ -42,7 +42,7 @@ export default {
         this.updateChart();
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       })
     },
     updateChart() {

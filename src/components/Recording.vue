@@ -59,7 +59,7 @@
                                 <input type="date" v-model="choose.tglpanen">
                         </div>
                     </div>
-                    <button class="button" type="submit">Submit</button>
+                    <button class="button" type="submit" @click="submitForm">Submit</button>
                 </form>
             </div>
             <div class="right">
@@ -104,20 +104,26 @@ export default {
         },
     },
     methods:{
-        submitForm(){
-            const formData = {
-                towerinput:this.towerInput,
-                namaTanaman: this.nmTanaman,
-                produsen: this.produsen,
-                exp: this.exp,
-                strpenyemaian: this.strpenyemaian,
-                tglkematian: this.tglkematian,
-                tglpemindahan: this.tglpemindahan,
-                tglpanen: this.tglpanen,
-            };
-            this.submitData(formData);
+        async submitForm(){
+                try{
+                    const formData = {
+                        towerinput: this.choose.towerInput,
+                        namaTanaman: this.choose.nmTanaman,
+                        produsen: this.choose.produsen,
+                        exp: this.choose.exp,
+                        strpenyemaian: this.choose.strpenyemaian,
+                        tglkematian: this.choose.tglkematian,
+                        tglpemindahan: this.choose.tglpemindahan,
+                        tglpanen: this.choose.tglpanen,
+                    };
+                    await axios.post('/submit',{data: formData,});
+                    alert('Success!');
+                }catch(error){
+                    console.error('error submit', error);
+                };
+            //this.submitData(formData);
         },
-        submitData(formData) {
+        /*submitData(formData) {
             axios
             .post('/submit',formData)
             .then((response)=>{
@@ -125,8 +131,7 @@ export default {
             })
             .catch((error)=>{
                 console.log('Error submitting data',error);
-            });
-        },
+            });*/
     },
 }
 </script>

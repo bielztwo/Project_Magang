@@ -12,7 +12,7 @@ app.listen(port, () => {
 
 const client = new Client({
     user: "postgres",
-    host: "localhost",
+    host: "192.168.0.7",
     database: "postgres",
     password: "biel5555",
     port: 5432,
@@ -59,6 +59,7 @@ app.get("/all", (req, res) => {
                 console.log(err);
                 res.status(500).send("Error fetching data from PostgreSQL");
             } else {
+                marcello
                 const formattedDate = result.rows.map((row) => ({
                     created_at: moment
                         .tz(row.created_at, "UTC")
@@ -204,15 +205,16 @@ app.get("/1hour", (req, res) => {
         }
     );
 });
-
+app.use(express.json());
 app.post('/submit', (req, res) => {
-    const formData = req.body;
+    res.header("Access-Control-Allow-Origin", "*");
+    const data = req.body;
 
     // Construct the SQL query
     const query = 'INSERT INTO data_tower (tower, nama_tanaman, produsen, expired, start_penyemaian, tanggal_pemindahan, tanggal_kematian, tanggal_panen) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
 
     // Extract the form data into an array
-    const values = [formData.towerinput, formData.namaTanaman, formData.produsen, formData.exp, formData.strpenyemaian, formData.tglkematian, formData.tglpemindahan, formData.tglpanen]; // Replace field1 and field2 with your actual field names
+    const values = [data.towerinput, data.namaTanaman, data.produsen, data.exp, data.strpenyemaian, data.tglkematian, data.tglpemindahan, data.tglpanen]; // Replace field1 and field2 with your actual field names
 
     // Execute the query using the connection pool
     pool.query(query, values)
@@ -227,4 +229,4 @@ app.post('/submit', (req, res) => {
 });
 
 // Set up the interval to call the function every 1 second
-//setInterval(fetchsensortestData, 1000);
+//setInterval(fetchsensortestData, 1000);        },
