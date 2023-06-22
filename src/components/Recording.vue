@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/axios';
 export default {
     data(){
         return{
@@ -100,27 +100,34 @@ export default {
     },
     computed:{
         towerinput(){
-            return `${this.tower}-${this.twrDirections}-${this.column}`;
+            return `${this.choose.tower}-${this.choose.twrDirection}-${this.choose.column}`;
         },
     },
     methods:{
         async submitForm(){
                 try{
                     const formData = {
-                        towerinput: this.choose.towerInput,
+                        towerinput: this.towerinput,
                         namaTanaman: this.choose.nmTanaman,
                         produsen: this.choose.produsen,
                         exp: this.choose.exp,
                         strpenyemaian: this.choose.strpenyemaian,
-                        tglkematian: this.choose.tglkematian,
                         tglpemindahan: this.choose.tglpemindahan,
+                        tglkematian: this.choose.tglkematian,
                         tglpanen: this.choose.tglpanen,
                     };
-                    await axios.post('/submit',{data: formData,});
+                        await axios.post('/submit', formData)
+                        .then((response) => {
+                            console.log('Data Submitted Succesfully!');
+                        })
+                        .catch((error) => {
+                            console.log('Error submitting data', error);
+                        });
+                    //await axios.post('/submit',{data: formData,});
                     alert('Success!');
                 }catch(error){
                     console.error('error submit', error);
-                };
+                }
             //this.submitData(formData);
         },
         /*submitData(formData) {
