@@ -7,81 +7,81 @@ process.env.TZ = "Asia/Jakarta";
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
 
 const client = new Client({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "biel5555",
-  port: 5432,
+    user: "postgres",
+    host: "localhost",
+    database: "postgres",
+    password: "Marcello21",
+    port: 5432,
 });
 
 client.connect();
 
 // Define the database query function
 app.get("/", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  client.query(
-    "SELECT created_at, ultrasonic, nutrition, temperature, ph FROM sensortest ORDER BY created_at DESC LIMIT 1",
-    (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error retrieving data from database");
-      } else {
-        const formattedDate = result.rows.map((row) => ({
-          created_at: moment
-            .tz(row.created_at, "UTC")
-            .tz("Asia/Jakarta")
-            .format(),
-          ultrasonic: row.ultrasonic,
-          nutrition: row.nutrition,
-          temperature: row.temperature,
-          ph: row.ph,
-        }));
-        console.log(formattedDate);
-        res.send(formattedDate);
-      }
-    }
-  );
+    res.header("Access-Control-Allow-Origin", "*");
+    client.query(
+        "SELECT created_at, ultrasonic, nutrition, temperature, ph FROM sensortest ORDER BY created_at DESC LIMIT 1",
+        (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Error retrieving data from database");
+            } else {
+                const formattedDate = result.rows.map((row) => ({
+                    created_at: moment
+                        .tz(row.created_at, "UTC")
+                        .tz("Asia/Jakarta")
+                        .format(),
+                    ultrasonic: row.ultrasonic,
+                    nutrition: row.nutrition,
+                    temperature: row.temperature,
+                    ph: row.ph,
+                }));
+                console.log(formattedDate);
+                res.send(formattedDate);
+            }
+        }
+    );
 });
 
 
 app.get("/all", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  client.query(
-    `SELECT created_at, ultrasonic, nutrition, temperature, ph 
+    res.header("Access-Control-Allow-Origin", "*");
+    client.query(
+        `SELECT created_at, ultrasonic, nutrition, temperature, ph 
   FROM sensortest 
   ORDER BY created_at`,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("Error fetching data from PostgreSQL");
-      } else {
-        const formattedDate = result.rows.map((row) => ({
-          created_at: moment
-            .tz(row.created_at, "UTC")
-            .tz("Asia/Jakarta")
-            .format(),
-          ultrasonic: row.ultrasonic,
-          nutrition: row.nutrition,
-          temperature: row.temperature,
-          ph: row.ph,
-        }));
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error fetching data from PostgreSQL");
+            } else {
+                const formattedDate = result.rows.map((row) => ({
+                    created_at: moment
+                        .tz(row.created_at, "UTC")
+                        .tz("Asia/Jakarta")
+                        .format(),
+                    ultrasonic: row.ultrasonic,
+                    nutrition: row.nutrition,
+                    temperature: row.temperature,
+                    ph: row.ph,
+                }));
 
-        console.log(formattedDate);
-        res.send(formattedDate);
-      }
-      // Do something with the result
-    }
-  );
+                console.log(formattedDate);
+                res.send(formattedDate);
+            }
+            // Do something with the result
+        }
+    );
 });
 app.get("/2minutes", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  // Execute a SQL query to get data from PostgreSQL
-  client.query(
-    `SELECT DISTINCT ON (created_at)
+    res.header("Access-Control-Allow-Origin", "*");
+    // Execute a SQL query to get data from PostgreSQL
+    client.query(
+        `SELECT DISTINCT ON (created_at)
           created_at, 
           ultrasonic,
           nutrition,
@@ -98,33 +98,33 @@ app.get("/2minutes", (req, res) => {
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
-    (err, result) => {
-      if (err) {
-        console.log(err.stack);
-        res.status(500).send("Error fetching data from PostgreSQL");
-      } else {
-        const formattedDate = result.rows.map((row) => ({
-          created_at: moment
-            .tz(row.created_at, "UTC")
-            .tz("Asia/Jakarta")
-            .format(),
-          ultrasonic: row.ultrasonic,
-          nutrition: row.nutrition,
-          temperature: row.temperature,
-          ph: row.ph,
-        }));
-        console.log(formattedDate);
-        res.send(formattedDate);
-      }
-    }
-  );
+        (err, result) => {
+            if (err) {
+                console.log(err.stack);
+                res.status(500).send("Error fetching data from PostgreSQL");
+            } else {
+                const formattedDate = result.rows.map((row) => ({
+                    created_at: moment
+                        .tz(row.created_at, "UTC")
+                        .tz("Asia/Jakarta")
+                        .format(),
+                    ultrasonic: row.ultrasonic,
+                    nutrition: row.nutrition,
+                    temperature: row.temperature,
+                    ph: row.ph,
+                }));
+                console.log(formattedDate);
+                res.send(formattedDate);
+            }
+        }
+    );
 });
 
 app.get("/10minutes", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  // Execute a SQL query to get data from PostgreSQL
-  client.query(
-    `SELECT DISTINCT ON (created_at)
+    res.header("Access-Control-Allow-Origin", "*");
+    // Execute a SQL query to get data from PostgreSQL
+    client.query(
+        `SELECT DISTINCT ON (created_at)
           created_at, 
           ultrasonic,
           nutrition,
@@ -141,32 +141,32 @@ app.get("/10minutes", (req, res) => {
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
-    (err, result) => {
-      if (err) {
-        console.log(err.stack);
-        res.status(500).send("Error fetching data from PostgreSQL");
-      } else {
-        const formattedDate = result.rows.map((row) => ({
-          created_at: moment
-            .tz(row.created_at, "UTC")
-            .tz("Asia/Jakarta")
-            .format(),
-          ultrasonic: row.ultrasonic,
-          nutrition: row.nutrition,
-          temperature: row.temperature,
-          ph: row.ph,
-        }));
-        console.log(formattedDate);
-        res.send(formattedDate);
-      }
-    }
-  );
+        (err, result) => {
+            if (err) {
+                console.log(err.stack);
+                res.status(500).send("Error fetching data from PostgreSQL");
+            } else {
+                const formattedDate = result.rows.map((row) => ({
+                    created_at: moment
+                        .tz(row.created_at, "UTC")
+                        .tz("Asia/Jakarta")
+                        .format(),
+                    ultrasonic: row.ultrasonic,
+                    nutrition: row.nutrition,
+                    temperature: row.temperature,
+                    ph: row.ph,
+                }));
+                console.log(formattedDate);
+                res.send(formattedDate);
+            }
+        }
+    );
 });
 app.get("/1hour", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  // Execute a SQL query to get data from PostgreSQL
-  client.query(
-    `SELECT DISTINCT ON (created_at)
+    res.header("Access-Control-Allow-Origin", "*");
+    // Execute a SQL query to get data from PostgreSQL
+    client.query(
+        `SELECT DISTINCT ON (created_at)
           created_at, 
           ultrasonic,
           nutrition,
@@ -183,27 +183,49 @@ app.get("/1hour", (req, res) => {
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
-    (err, result) => {
-      if (err) {
-        console.log(err.stack);
-        res.status(500).send("Error fetching data from PostgreSQL");
-      } else {
-        const formattedDate = result.rows.map((row) => ({
-          created_at: moment
-            .tz(row.created_at, "UTC")
-            .tz("Asia/Jakarta")
-            .format(),
-          ultrasonic: row.ultrasonic,
-          nutrition: row.nutrition,
-          temperature: row.temperature,
-          ph: row.ph,
-        }));
-        console.log(formattedDate);
-        res.send(formattedDate);
-      }
-    }
-  );
+        (err, result) => {
+            if (err) {
+                console.log(err.stack);
+                res.status(500).send("Error fetching data from PostgreSQL");
+            } else {
+                const formattedDate = result.rows.map((row) => ({
+                    created_at: moment
+                        .tz(row.created_at, "UTC")
+                        .tz("Asia/Jakarta")
+                        .format(),
+                    ultrasonic: row.ultrasonic,
+                    nutrition: row.nutrition,
+                    temperature: row.temperature,
+                    ph: row.ph,
+                }));
+                console.log(formattedDate);
+                res.send(formattedDate);
+            }
+        }
+    );
+});
+app.use(express.json());
+app.post('/submit', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const formData = req.body;
+
+    // Construct the SQL query
+    const query = 'INSERT INTO data_tower (tower, nama_tanaman, produsen, expired, start_penyemaian, tanggal_pemindahan, tanggal_kematian, tanggal_panen) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+
+    // Extract the form data into an array
+    const values = [formData.towerinput, formData.namaTanaman, formData.produsen, formData.exp, formData.strpenyemaian, formData.tglpemindahan, formData.tglkematian, formData.tglpanen]; // Replace field1 and field2 with your actual field names
+
+    // Execute the query using the connection pool
+    client.query(query, values)
+        .then(() => {
+            console.log('Data saved to the database');
+            res.sendStatus(200); // Send a success status back to the client
+        })
+        .catch((error) => {
+            console.error('Error saving data to the database', error);
+            res.sendStatus(500); // Send an error status back to the client
+        });
 });
 
 // Set up the interval to call the function every 1 second
-//setInterval(fetchSensorData, 1000);
+//setInterval(fetchsensortestData, 1000);        },

@@ -1,125 +1,183 @@
-<!-- eslint-disable no-undef -->
 <template>
   <div class="hello">
-    <div>
-      <h1>Fetch Sensor Data</h1>
-    </div>
+    <h1>Fetch Sensor Data</h1>
     <h2 style="text-align: center;">Items</h2>
-    <body>
-      <h4 v-for="items in item" :key="items.id">Water Level: {{ items.ultrasonic }} Cm</h4>
-      <h4 v-for="items in item" :key="items.id">Nutrition: {{ items.nutrition }} PPM</h4>
-      <h4 v-for="items in item" :key="items.id">Water Temperature: {{ items.temperature }} C</h4>
-      <h4 v-for="items in item" :key="items.id">Ph: {{ items.ph }} </h4>
-    
-      <label>
-      <input type="text">
-      <button id = "buttn1" class="btn" v-on:click="getData1()">alldata</button>
-      <button id = "b2" class="btn" v-on:click="getData2()">2 Minutes</button>
-      <button id = "b3" class="btn" v-on:click="getData3()">10 Minutes</button>
-      <button id = "b4" class="btn" v-on:click="getData4()">1 Hour</button>
-    </label>
-    </body>
-    <div class="table-scroll">
-      <table class="items-table">
-      <thead>
-        <tr>
-          <th >Time</th>
-          <th >Jarak</th>
-          <th >Nutrisi</th>
-          <th >Temperature</th>
-          <th >ph</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="itm in item1" :key="itm.id">
-          <td >{{ itm.created_at }}</td>
-          <td >{{ itm.ultrasonic }} cm</td>
-          <td >{{ itm.nutrition }} ppm</td>
-          <td >{{ itm.temperature }} C</td>
-          <td >{{ itm.ph }} </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="chart-container">
+    <div class="chart-row">
+      <canvas id="ultrasonicChart"></canvas>
+      <canvas id="nutritionChart"></canvas>
+    </div>
+    <div class="chart-row">
+      <canvas id="temperatureChart"></canvas>
+      <canvas id="phChart"></canvas>
+    </div>
   </div>
-</div>
+    <body>
+      <!--<h4 v-for="item in items" :key="item.id">Water Level: {{ latestData.ultrasonic }} Cm</h4>
+      <h4 v-for="item in items" :key="item.id">Nutrition: {{ latestData.nutrition }} PPM</h4>
+      <h4 v-for="item in items" :key="item.id">Water Temperature: {{ latestData.temperature }} C</h4>
+      <h4 v-for="item in items" :key="item.id">Ph: {{ latestData.ph }} </h4>-->
+    </body>
+  </div>
 </template>
 
 <script>
+import Chart from 'chart.js/auto';
 import axios from '@/axios';
+
 export default {
-  data(){
-    return{
-      item:'',
-      item1: [],
-      buttn1: false,
-      b2: false
+  data() {
+    return {
+      items: [],
+      chart: null
     }
   },
-  methods:{
-    getData(){
-      axios
-      .get("/")
-      .then((response) =>{
-        this.item = response.data;
-      })
-      .catch((error)=>{
-        console.log('Kamu salah',error);
-      })
-    },
-  
-    getData1(){
+  methods: {
+    getData() {
       axios
       .get("/all")
-      .then((response) =>{
-        this.item1 = response.data;
+      .then((response) => {
+        this.items = response.data;
+        //let latestData = this.items.slice(-1);
+        this.updateChart();
       })
-      .catch((error)=>{
-        console.log('Kamu salah',error);
-      })
-    },
-    getData2(){
-      axios
-      .get("/2minutes")
-      .then((response) =>{
-        this.item1 = response.data;
-      })
-      .catch((error)=>{
-        console.log('Kamu salah',error);
+      .catch((error) => {
+        //console.log(error);
       })
     },
-    getData3(){
-      axios
-      .get("/10minutes")
-      .then((response) =>{
-        this.item1 = response.data;
-      })
-      .catch((error)=>{
-        console.log('Kamu salah',error);
-      })
+    updateChart() {
+      // Access the canvas element and create a chart with the fetched data
+      let ctx1 = document.getElementById('ultrasonicChart').getContext('2d');
+      let ctx2 = document.getElementById('nutritionChart').getContext('2d');
+      let ctx3 = document.getElementById('temperatureChart').getContext('2d');
+      let ctx4 = document.getElementById('phChart').getContext('2d');
+
+      // Get the latest 10 values from the fetched data
+      let latestItems = this.items.slice(-10); // Get the last 10 items
+      let labels1 = latestItems.map(item => item.created_at); // Get the created_at values for the labels
+      let values1 = latestItems.map(item => item.ultrasonic); // Get the ultrasonic values for the data
+      let labels2 = latestItems.map(item => item.created_at); // Get the created_at values for the labels
+      let values2 = latestItems.map(item => item.nutrition); // Get the nutrition values for the data
+      let labels3 = latestItems.map(item => item.created_at); // Get the created_at values for the labels
+      let values3 = latestItems.map(item => item.temperature); // Get the temperature values for the data
+      let labels4 = latestItems.map(item => item.created_at); // Get the created_at values for the labels
+      let values4 = latestItems.map(item => item.ph); // Get the ph values for the data
+
+      
+      if (this.ultrasonicchart) {
+        this.ultrasonicchart.destroy(); // Destroy existing Chart instance
+      }
+      this.ultrasonicchart = new Chart(ctx1, {
+        type: 'line', // Set the chart type to bar
+        data: {
+          labels: labels1, // Set the labels for the x-axis
+          datasets: [{
+            label: 'Water Level (Cm)', // Set the label for the chart
+            data: values1, // Set the data for the y-axis
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the background color for the bars
+            borderColor: 'rgba(75, 192, 192, 1)', // Set the border color for the bars
+            borderWidth: 1 // Set the border width for the bars
+          },
+          {
+            label: 'Nutrition (ppm)', // Set the label for the chart
+            data: values2, // Set the data for the y-axis
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the background color for the bars
+            borderColor: 'rgba(75, 192, 192, 1)', // Set the border color for the bars
+            borderWidth: 1 // Set the border width for the bars
+          }]
+        },
+        options: {
+          animation: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      if (this.nutritionchart) {
+        this.nutritionchart.destroy(); // Destroy existing Chart instance
+      }
+      this.nutritionchart = new Chart(ctx2, {
+        type: 'line', // Set the chart type to bar
+        data: {
+          labels: labels2, // Set the labels for the x-axis
+          datasets: [{
+            label: 'Nutrition (ppm)', // Set the label for the chart
+            data: values2, // Set the data for the y-axis
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the background color for the bars
+            borderColor: 'rgba(75, 192, 192, 1)', // Set the border color for the bars
+            borderWidth: 1 // Set the border width for the bars
+          }]
+        },
+        options: {
+          animation: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      if (this.temperaturechart) {
+        this.temperaturechart.destroy(); // Destroy existing Chart instance
+      }
+      this.temperaturechart = new Chart(ctx3, {
+        type: 'line', // Set the chart type to bar
+        data: {
+          labels: labels3, // Set the labels for the x-axis
+          datasets: [{
+            label: 'Temperature (C)', // Set the label for the chart
+            data: values3, // Set the data for the y-axis
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the background color for the bars
+            borderColor: 'rgba(75, 192, 192, 1)', // Set the border color for the bars
+            borderWidth: 1 // Set the border width for the bars
+          }]
+        },
+        options: {
+          animation: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      if (this.phchart) {
+        this.phchart.destroy(); // Destroy existing Chart instance
+      }
+      this.phchart = new Chart(ctx4, {
+        type: 'line', // Set the chart type to bar
+        data: {
+          labels: labels4, // Set the labels for the x-axis
+          datasets: [{
+            label: 'PH', // Set the label for the chart
+            data: values4, // Set the data for the y-axis
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the background color for the bars
+            borderColor: 'rgba(75, 192, 192, 1)', // Set the border color for the bars
+            borderWidth: 1 // Set the border width for the bars
+          }]
+        },
+        options: {
+          animation: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
     },
-    getData4(){
-      axios
-      .get("/1hour")
-      .then((response) =>{
-        this.item1 = response.data;
-      })
-      .catch((error)=>{
-        console.log('Kamu salah',error);
-      })
-    }
   },
-  mounted() {
-    //this.buttn1 = document.getElementById("buttn1");
-    //this.b2 = document.getElementById("b2");
-    if(buttn1.clicked == true){
-      this.getData1();
-    } else if (b2.clicked == true) {
-      this.getData2();
-    }else if (b3.clicked == true) {
-      this.getData3();
-    }else if (b4.clicked == true) {
-      this.getData4();
-    }
+  mounted () {
     setInterval(this.getData, 2000);
   }
 }
@@ -127,7 +185,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
+h4 {
   margin: 40px 0 0;
 }
 ul {
@@ -141,35 +199,26 @@ li {
 a {
   color: #42b983;
 }
-.items-table {
-  margin-top: 20px;
-  border-collapse: collapse;
-  width: 60%;
-  margin-bottom: 1rem;
-  margin: 0 auto;
-}
+
 h2{
   margin-bottom: 70px;
 }
-
-.table-scroll{
-  margin-top: 50px;
-  height: 700px;
-  overflow: auto;
-  margin-left: 350px;
-  width: 1200px;
+.hello{
+  padding: 50px;
+}
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.items-table th,
-.items-table td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 0.5rem;
+.chart-row {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.items-table th {
-  background-color: #f2f2f2;
-  text-align: center;
-  font-weight: bold;
+canvas {
+  width: 100%;
+  height: 400px;
 }
 </style>
