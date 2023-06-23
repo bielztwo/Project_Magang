@@ -24,7 +24,7 @@ client.connect();
 app.get("/", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     client.query(
-        "SELECT created_at, ultrasonic, nutrition, temperature, ph FROM sensortest ORDER BY created_at DESC LIMIT 1",
+        "SELECT created_at, ultrasonic, nutrition, temperature, ph FROM sensor ORDER BY created_at DESC LIMIT 1",
         (err, result) => {
             if (err) {
                 console.error(err);
@@ -52,7 +52,7 @@ app.get("/all", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     client.query(
         `SELECT created_at, ultrasonic, nutrition, temperature, ph 
-  FROM sensortest 
+  FROM sensor 
   ORDER BY created_at`,
         (err, result) => {
             if (err) {
@@ -92,9 +92,9 @@ app.get("/2minutes", (req, res) => {
               date_trunc('minute', created_at) - 
               (date_part('minute', created_at)::int % 2) * INTERVAL '1 minute' AS created_at, 
               ultrasonic, nutrition, temperature, ph
-          FROM sensortest
-          WHERE created_at >= (SELECT MIN(created_at) FROM sensortest)
-              AND created_at <= (SELECT MAX(created_at) FROM sensortest)
+          FROM sensor
+          WHERE created_at >= (SELECT MIN(created_at) FROM sensor)
+              AND created_at <= (SELECT MAX(created_at) FROM sensor)
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
@@ -135,9 +135,9 @@ app.get("/10minutes", (req, res) => {
               date_trunc('minute', created_at) - 
               (date_part('minute', created_at)::int % 10) * INTERVAL '1 minute' AS created_at, 
               ultrasonic, nutrition, temperature, ph
-          FROM sensortest
-          WHERE created_at >= (SELECT MIN(created_at) FROM sensortest)
-              AND created_at <= (SELECT MAX(created_at) FROM sensortest)
+          FROM sensor
+          WHERE created_at >= (SELECT MIN(created_at) FROM sensor)
+              AND created_at <= (SELECT MAX(created_at) FROM sensor)
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
@@ -177,9 +177,9 @@ app.get("/1hour", (req, res) => {
               date_trunc('minute', created_at) - 
               (date_part('minute', created_at)::int % 60) * INTERVAL '1 minute' AS created_at, 
               ultrasonic, nutrition, temperature, ph
-          FROM sensortest
-          WHERE created_at >= (SELECT MIN(created_at) FROM sensortest)
-              AND created_at <= (SELECT MAX(created_at) FROM sensortest)
+          FROM sensor
+          WHERE created_at >= (SELECT MIN(created_at) FROM sensor)
+              AND created_at <= (SELECT MAX(created_at) FROM sensor)
           ORDER BY created_at
           ) sub
           ORDER BY created_at;`,
@@ -228,4 +228,4 @@ app.post('/submit', (req, res) => {
 });
 
 // Set up the interval to call the function every 1 second
-//setInterval(fetchsensortestData, 1000);        },
+//setInterval(fetchsensorData, 1000);        },
