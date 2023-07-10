@@ -1,5 +1,4 @@
 <template>
-
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
         <div class="logo">
@@ -18,9 +17,15 @@
         <div class="menu">
             <router-link to="/" class="button">
                 <span class="material-symbols-outlined">
-                home_app_logo
+                in_home_mode
                 </span>
                 <span class="text">Home</span>
+            </router-link>
+            <router-link to="/graph" class="button">
+                <span class="material-symbols-outlined">
+                query_stats
+                </span>
+                <span class="text">Graph</span>
             </router-link>
             <router-link to="/table" class="button">
                 <span class="material-symbols-outlined">
@@ -145,7 +150,7 @@ aside {
                 color: #0096c7;
                 margin: 2px;
                 padding-left: 20px;
-                transition: 0.5s ease-out;
+                transition: 0.4s ease-out;
                 text-align: right;
             }
 
@@ -187,7 +192,7 @@ aside {
 
         .menu-toggle-wrap {
             top: -3rem;
-            transition: 0.5s ease-out;
+            transition: 0.7s ease-out;
 
             .menu-toggle {
                 transform: rotate(-180deg);

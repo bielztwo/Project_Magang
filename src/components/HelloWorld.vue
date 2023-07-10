@@ -205,6 +205,7 @@ h2{
 }
 .hello{
   padding: 50px;
+  width: 100%;
 }
 .chart-container {
   display: flex;

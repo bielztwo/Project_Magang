@@ -162,6 +162,7 @@ export default {
     .hello{
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
     .mid{
         display: flex;
@@ -169,14 +170,17 @@ export default {
     .right,.left{
         padding: 50px;
     }
+    #lbl{
+        display: flex;
+    }
     .left{
         width: 60%;
+        margin-left: 100px;
     }
     .right{
         width: 40%;
     }
     .twr1,.twr2,.twr3{
-        display: inline;
         margin-left: 25px;
         margin-top: 25px;
         margin-right: 25px;

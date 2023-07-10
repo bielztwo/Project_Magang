@@ -9,26 +9,32 @@
                 <button id = "b4" class="btn" v-on:click="getData4()">1 Hour</button>
             </div>
             </body>
-            <div class="table-scroll">
-            <table class="items-table">
-            <thead>
-                <tr>
-                <th >Time</th>
-                <th >Jarak</th>
-                <th >Nutrisi</th>
-                <th >Temperature</th>
-                <th >ph</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="itm in item1" :key="itm.id">
-                <td >{{ itm.created_at }}</td>
-                <td >{{ itm.ultrasonic }} cm</td>
-                <td >{{ itm.nutrition }} ppm</td>
-                <td >{{ itm.temperature }} C</td>
-                <td >{{ itm.ph }} </td>
-                </tr>
-            </tbody>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <th >Time</th>
+                    <th >Jarak</th>
+                    <th >Nutrisi</th>
+                    <th >Temperature Air</th>
+                    <th >PH</th>
+                    <th >Temperature Ruangan</th>
+                    <th >Kelembapan</th>
+                    <th >Intensitas cahaya atas</th>
+                    <th >Intensitas cahaya bawah</th>
+                </thead>
+                <tbody>
+                    <tr v-for="itm in item1" :key="itm.id">
+                    <td >{{ itm.created_at }}</td>
+                    <td >{{ itm.ultrasonic }} cm</td>
+                    <td >{{ itm.nutrition }} ppm</td>
+                    <td >{{ itm.temperature }} C</td>
+                    <td >{{ itm.ph }} </td>
+                    <td >{{ itm.room_temperature }} </td>
+                    <td >{{ itm.humidity }} </td>
+                    <td >{{ itm.intensitas_atas }} </td>
+                    <td >{{ itm.intensitas_bawah }} </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         </div>
@@ -156,10 +162,10 @@ a {
     cursor: pointer;
 }
 
-.items-table {
+table {
     margin-top: 10px;
-    border-collapse: collapse;
-    width: 80%;
+    border-collapse: seperate;
+    width: 100%;
     margin-bottom: 1rem;
     margin: 0 auto;
 }
@@ -170,21 +176,24 @@ h2 {
 
 .table-scroll {
     margin-top: 30px;
-    height: 700px;
     overflow: auto;
+    height: 700px;
     align-items: center;
     width: 90%;
 }
 
-.items-table th,
-.items-table td {
+table th,td {
     border: 1px solid #ddd;
     text-align: center;
     padding: 0.5rem;
 }
 
-.items-table th {
+table th {
     background-color: #f2f2f2;
+    position: sticky;
+    top: 0px;
     text-align: center;
     font-weight: bold;
-}</style>
+}
+
+</style>

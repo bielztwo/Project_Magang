@@ -7,14 +7,13 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
 import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'App',
   components: { 
     Sidebar,
-    HelloWorld
   }
 }
 </script>
@@ -43,8 +42,8 @@ export default {
 }
 *{
   margin: 0;
-  padding: 0;
-  width: 100%;
+  padding: 0; 
+  height: auto;
   box-sizing: border-box;
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }

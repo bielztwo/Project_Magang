@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
                     temperature: row.temperature,
                     ph: row.ph,
                 }));
-                console.log(formattedDate);
+                //console.log(formattedDate);
                 res.send(formattedDate);
             }
         }
@@ -51,7 +51,7 @@ app.get("/", (req, res) => {
 app.get("/all", (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     client.query(
-        `SELECT created_at, ultrasonic, nutrition, temperature, ph 
+        `SELECT created_at, ultrasonic, nutrition, temperature, ph, room_temperature, humidity, intensitas_atas, intensitas_bawah 
   FROM sensor 
   ORDER BY created_at`,
         (err, result) => {
@@ -63,14 +63,18 @@ app.get("/all", (req, res) => {
                     created_at: moment
                         .tz(row.created_at, "UTC")
                         .tz("Asia/Jakarta")
-                        .format(),
+                        .format('YYYY-MM-DD HH:mm:ss'),
                     ultrasonic: row.ultrasonic,
                     nutrition: row.nutrition,
                     temperature: row.temperature,
                     ph: row.ph,
+                    room_temperature: row.room_temperature,
+                    humidity: row.humidity,
+                    intensitas_atas: row.intensitas_atas,
+                    intensitas_bawah: row.intensitas_bawah,
                 }));
 
-                console.log(formattedDate);
+                //console.log(formattedDate);
                 res.send(formattedDate);
             }
             // Do something with the result
@@ -113,7 +117,7 @@ app.get("/2minutes", (req, res) => {
                     temperature: row.temperature,
                     ph: row.ph,
                 }));
-                console.log(formattedDate);
+                //console.log(formattedDate);
                 res.send(formattedDate);
             }
         }
@@ -156,7 +160,7 @@ app.get("/10minutes", (req, res) => {
                     temperature: row.temperature,
                     ph: row.ph,
                 }));
-                console.log(formattedDate);
+                //console.log(formattedDate);
                 res.send(formattedDate);
             }
         }
@@ -198,7 +202,7 @@ app.get("/1hour", (req, res) => {
                     temperature: row.temperature,
                     ph: row.ph,
                 }));
-                console.log(formattedDate);
+                //console.log(formattedDate);
                 res.send(formattedDate);
             }
         }
