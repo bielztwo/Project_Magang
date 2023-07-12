@@ -175,12 +175,16 @@ app.get("/1hour", (req, res) => {
           ultrasonic,
           nutrition,
           temperature,
-          ph
+          ph,
+          room_temperature,
+          humidity,
+          intensitas_atas,
+          intensitas_bawah
           FROM (
           SELECT 
               date_trunc('minute', created_at) - 
               (date_part('minute', created_at)::int % 60) * INTERVAL '1 minute' AS created_at, 
-              ultrasonic, nutrition, temperature, ph
+              ultrasonic, nutrition, temperature, ph, room_temperature,humidity,intensitas_atas,intensitas_bawah
           FROM sensor
           WHERE created_at >= (SELECT MIN(created_at) FROM sensor)
               AND created_at <= (SELECT MAX(created_at) FROM sensor)
@@ -201,6 +205,10 @@ app.get("/1hour", (req, res) => {
                     nutrition: row.nutrition,
                     temperature: row.temperature,
                     ph: row.ph,
+                    room_temperature: row.room_temperature,
+                    humidity: row.humidity,
+                    intensitas_atas: row.intensitas_atas,
+                    intensitas_bawah: row.intensitas_bawah,
                 }));
                 //console.log(formattedDate);
                 res.send(formattedDate);
